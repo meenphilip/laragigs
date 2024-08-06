@@ -1,0 +1,17 @@
+# Ignore Python bytecode files
+*.pyc
+*.pyo
+*.pyd
+*.log
+*.pot
+__pycache__/
+
+# Ignore Pipenv files
+Pipfile
+Pipfile.lock
+
+# VS Code
+.vscode/
+
+# Ignore media files
+media/
