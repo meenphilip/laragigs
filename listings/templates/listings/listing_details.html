@@ -1,0 +1,32 @@
+{% extends "base.html" %} 
+
+{% load static %} 
+
+{% block title %}All Listings{% endblock %} 
+
+{% block content %}
+<h1>  <a href="{% url 'listings-list' %}">Back</a></h1>
+<h2 class="job-listings">Job Listings</h2>
+<div class="job-listings">
+  <div class="card">
+    {% if listing.logo %}
+    <img
+      src="{{ listing.logo.url }}"
+      alt="{{ listing.company_name }}"
+    />
+    {% else %}
+    <div
+      class="no-logo">
+      No Logo
+    </div>
+    {% endif %}
+    <div class="card-content">
+      <h3>{{ listing.job_title }} at {{ listing.company_name }}</h3>
+      <p>{{ listing.location }}</p>
+      <p class="tags">Tags:{{listing.tags.all|join:", "}} </p>
+      <p>{{ listing.description }}</p>
+      <p>Posted by: {{ listing.user.username }}</p>
+    </div>
+  </div>
+</div>
+{% endblock %}
