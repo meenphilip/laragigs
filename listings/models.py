@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 from taggit.managers import TaggableManager
 
 
@@ -23,3 +24,7 @@ class Listing(models.Model):
 
     def __str__(self):
         return f"{self.company_name}"
+
+    # cononical url
+    def get_absolute_url(self):
+        return reverse("single-listing", args=[self.id])
