@@ -10,7 +10,7 @@
   {% for listing in listings %}
   <div class="card">
     {% if listing.logo %}
-    <a href="{% url 'single-listing' listing.id %}">
+    <a href="{{listing.get_absolute_url}}">
       <img src="{{ listing.logo.url }}" alt="{{ listing.company_name }} logo" />
     </a>
     {% else %}
