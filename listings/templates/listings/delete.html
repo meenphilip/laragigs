@@ -1,0 +1,13 @@
+{% extends "base.html" %} 
+
+{% load static %} 
+
+{% block content %}
+<h4>Are you sure you want to delete the listing</h4>
+<p><b>"{{ listing.job_title }}" at "{{listing.company_name }}"?</b></p>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Delete</button>
+  <a href="{% url 'listings' %}">Cancel</a>
+</form>
+{% endblock %}
