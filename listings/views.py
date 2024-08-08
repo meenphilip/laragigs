@@ -1,12 +1,34 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.db.models import Q
+from taggit.models import Tag
 from .models import Listing
 from .forms import ListingForm
 
 
 # Get all listings
-def listings(request):
+def listings(request, tag_slug=None):
+    # perform a search
+    query = request.GET.get("q", "")
+
+    # get all listings
     listings = Listing.objects.all()
-    context = {"listings": listings}
+
+    # to let users list all listings tagged with a specific tag.
+    tag = None
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        listings = listings.filter(tags__in=[tag])
+
+    # search a listing
+    # if query:
+    #     listings = listings.filter(
+    #         Q(company_name__icontains=query)
+    #         | Q(job_title__icontains=query)
+    #         | Q(location__icontains=query)
+    #         | Q(description__icontains=query)
+    #     )
+
+    context = {"listings": listings, "query": query, "tag": tag}
     return render(request, "listings/list.html", context)
 
 
