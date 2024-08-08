@@ -55,7 +55,7 @@ def update_listing(request, id):
 
 # delete listing
 def delete_listing(request, id):
-    listing = get_object_or_404(Listing, id=id)
+    listing = get_object_or_404(Listing, id=id, user=request.user)
     if request.method == "POST":
         listing.delete()
         return redirect("listings")
