@@ -2,37 +2,59 @@
 
 {% load static %} 
 
-{% block title %}All Listings{% endblock %} 
+{% block title %}
+  {{ listing.job_title }} at {{ listing.company_name }}
+{% endblock %} 
 
-{% block content %}
-<h1>  <a href="{% url 'listings' %}">Back</a></h1>
-<h2 class="job-listings">Job Listings</h2>
-<div class="job-listings">
-  <div class="card">
-    {% if listing.logo %}
-    <img
-      src="{{ listing.logo.url }}"
-      alt="{{ listing.company_name }}"
-    />
-    {% else %}
-    <div
-      class="no-logo">
-      No Logo
-    </div>
-    {% endif %}
-    <div class="card-content">
-      <h3>{{ listing.job_title }} at {{ listing.company_name }}</h3>
-      <p>{{ listing.location }}</p>
-      <p class="tags">Tags:{{listing.tags.all|join:", "}} </p>
-      <p>{{ listing.description }}</p>
-      <p>Posted by: {{ listing.user.username }}</p>
+{% block content %} 
 
-      <div class="button-group" style="margin-top: 8px">
-        <a href="{% url 'listing_update' listing.id %}" style="margin-right: 15px">Update</a>
-        <a href="{% url 'delete' listing.id %}">Delete</a>
+{% include "search.html" %}
+<a href="{% url 'listings' %}" class="inline-block text-black ml-4 mb-4"
+  ><i class="fa-solid fa-arrow-left"></i> Back
+</a>
+<div class="mx-4">
+  <div class="bg-gray-50 border border-gray-200 p-10 rounded">
+    <div class="flex flex-col items-center justify-center text-center">
+      <img
+        class="w-48 mr-6 mb-6"
+        src="{{ listing.logo.url }}"
+        alt="{{ listing.company_name }}"
+      />
+
+      <h3 class="text-2xl mb-2">{{ listing.job_title|capfirst }}</h3>
+      <div class="text-xl font-bold mb-4">{{ listing.company_name|capfirst }}</div>
+      <ul class="flex">
+        {% for tag in listing.tags.all %}
+        <li class="bg-black text-white rounded-xl px-3 py-1 mr-2">
+          <a href="{% url 'listings_by_tag' tag.slug %}"> {{tag}}</a>
+        </li>
+        {% endfor %}
+      </ul>
+      <div class="text-lg my-4">
+        <i class="fa-solid fa-location-dot"></i>  {{ listing.location|capfirst }}
+      </div>
+      <div class="border border-gray-200 w-full mb-6"></div>
+
+      <div>
+        <h3 class="text-3xl font-bold mb-4">Job Description</h3>
+        <div class="text-lg space-y-6">
+          <p>{{ listing.description|linebreaksbr }}</p>
+
+          <a
+            href="#"
+            class="block bg-laravel text-white mt-6 py-2 rounded-xl hover:opacity-80"
+            ><i class="fa-solid fa-envelope"></i> Contact Employer</a
+          >
+
+          <a
+            href="{{listing.website_url}}"
+            target="_blank"
+            class="block bg-black text-white py-2 rounded-xl hover:opacity-80"
+            ><i class="fa-solid fa-globe"></i> Visit Website</a
+          >
+        </div>
       </div>
     </div>
-    
   </div>
 </div>
 {% endblock %}

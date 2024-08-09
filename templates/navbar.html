@@ -1,0 +1,33 @@
+{% load static %}
+
+<nav class="flex justify-between items-center mb-4">
+  <!-- Logo with Static File Reference -->
+  <a href="{% url 'listings' %}">
+    <img
+      class="w-24"
+      src="{% static 'images/logo.png' %}"
+      alt="LaraGigs Logo"
+      class="logo"
+    />
+  </a>
+
+  <!-- Navigation Links -->
+  <ul class="flex space-x-6 mr-6 text-lg">
+    <li>
+      <a href="{% url 'manage_listings' %}" class="hover:text-laravel">
+        <i class="fa-solid fa-user-plus"></i> Manage Gigs
+      </a>
+    </li>
+  <ul class="flex space-x-6 mr-6 text-lg">
+    <li>
+      <a href="#" class="hover:text-laravel">
+        <i class="fa-solid fa-user-plus"></i> Register
+      </a>
+    </li>
+    <li>
+      <a href="#" class="hover:text-laravel">
+        <i class="fa-solid fa-arrow-right-to-bracket"></i> Login
+      </a>
+    </li>
+  </ul>
+</nav>

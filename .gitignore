@@ -15,3 +15,4 @@ Pipfile.lock
 
 # Ignore media files
 media/
+static/images/

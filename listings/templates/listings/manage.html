@@ -1,0 +1,51 @@
+{% extends "base.html" %} 
+
+{% load static %} 
+
+{% block title %}Manage Gigs{% endblock %}
+
+{% block content %} 
+{% include "search.html" %}
+
+<div class="mx-4">
+  <div class="bg-gray-50 border border-gray-200 p-10 rounded">
+    <header>
+      <h1 class="text-3xl text-center font-bold my-6 uppercase">Manage Gigs</h1>
+    </header>
+
+    <table class="w-full table-auto rounded-sm">
+      <tbody>
+        {% for listing in listings %}
+        <tr class="border-gray-300">
+          <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">
+            <a href="{% url 'single-listing' listing.id %}">{{ listing.job_title }}</a>
+          </td>
+          <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">
+            <a href="{% url 'listing_update' listing.id %}" class="text-blue-400 px-6 py-2 rounded-xl">
+              <i class="fa-solid fa-pen-to-square"></i> Edit
+            </a>
+          </td>
+          <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">
+            <form action="{% url 'delete_listing' listing.id %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" class="text-red-600">
+                <i class="fa-solid fa-trash-can"></i> Delete
+              </button>
+            </form>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="3" class="px-4 py-8 border-t border-b border-gray-300 text-lg text-center">
+            <p class="font-bold">No listings found.</p>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% include "footer.html" %} 
+
+{% endblock %}

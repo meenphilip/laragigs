@@ -1,0 +1,54 @@
+{% extends "base.html" %} 
+
+{% load static %} 
+
+{% block content %} 
+
+{% include "hero.html" %}
+  <!-- Search -->
+  {% include "search.html" %}
+  {% if listings %}
+  <div class="lg:grid lg:grid-cols-2 gap-4 space-y-4 md:space-y-0 mx-4">
+    <!-- Item 1 -->
+    {% for listing in listings %}
+    <div class="bg-gray-50 border border-gray-200 rounded p-6">
+      <div class="flex">
+        {% if listing.logo %}
+        <a href="{{listing.get_absolute_url}}">
+          <img
+            class="hidden w-48 mr-6 md:block"
+            src="{{ listing.logo.url }}"
+            alt="{{ listing.company_name }}"
+          />
+        </a>
+        {% else %}
+        <div class="no-logo">No Logo</div>
+        {% endif %}
+        <div>
+          <h3 class="text-2xl">
+            <a href="show.html">{{ listing.job_title|capfirst }}</a>
+          </h3>
+          <div class="text-xl font-bold mb-4">{{ listing.company_name|capfirst }}</div>
+          <ul class="flex">
+            {% for tag in listing.tags.all %}
+
+            <li
+              class="flex items-center justify-center bg-black text-white rounded-xl py-1 px-3 mr-2 text-xs"
+            >
+              <a href="{% url 'listings_by_tag' tag.slug %}"> {{tag}}</a>
+            </li>
+            {% endfor %}
+          </ul>
+          <div class="text-lg mt-4">
+            <i class="fa-solid fa-location-dot"></i> {{ listing.location|capfirst }}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %} 
+  </div>
+  {% else %}
+  <p class="font-bold text-center">No listings found matching your search criteria.</p>
+
+{% endif %}
+{% endblock %}
