@@ -4,8 +4,11 @@ from . import views
 urlpatterns = [
     path("", views.listings, name="listings"),
     path("tag/<slug:tag_slug>/", views.listings, name="listings_by_tag"),
-    path("create_listings/", views.create_listing, name="create"),
-    path("listing-detail/<int:id>/", views.single_listing, name="single-listing"),
-    path("listing-update/<int:id>/", views.update_listing, name="listing_update"),
-    path("listing-delete/<int:id>/", views.delete_listing, name="delete"),
+    path("listings/create/", views.create_listing, name="create_listing"),
+    path("listings/<int:id>/detail/", views.single_listing, name="single-listing"),
+    path("listings/<int:id>/edit/", views.update_listing, name="update_listing"),
+    path("listings/<int:id>/delete/", views.delete_listing, name="delete_listing"),
+    path("listings/manage/", views.manage_listings, name="manage_listings"),
+    path("listings/search/", views.search_listings, name="search_listings"),
 ]
+
