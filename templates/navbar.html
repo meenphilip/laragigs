@@ -13,21 +13,62 @@
 
   <!-- Navigation Links -->
   <ul class="flex space-x-6 mr-6 text-lg">
-    <li>
-      <a href="{% url 'manage_listings' %}" class="hover:text-laravel">
-        <i class="fa-solid fa-user-plus"></i> Manage Gigs
-      </a>
-    </li>
-  <ul class="flex space-x-6 mr-6 text-lg">
-    <li>
-      <a href="#" class="hover:text-laravel">
-        <i class="fa-solid fa-user-plus"></i> Register
-      </a>
-    </li>
-    <li>
-      <a href="#" class="hover:text-laravel">
-        <i class="fa-solid fa-arrow-right-to-bracket"></i> Login
-      </a>
-    </li>
+    {% if request.user.is_authenticated %}
+      <li> 
+        <span class="font-bold">WELCOME {{ request.user.first_name|default:request.user.username|upper }}</span>
+      </li>
+      <li>
+        <a href="{% url 'manage_listings' %}" class="hover:text-laravel">
+          <i class="fa-solid fa-gear"></i> Manage listings
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'logout' %}" class="hover:text-laravel">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+        </a>
+      </li>
+    {% else %}
+      <li>
+        <a href="#" class="hover:text-laravel">
+          <i class="fa-solid fa-user-plus"></i> Register
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'login' %}" class="hover:text-laravel">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i> Log-in
+        </a>
+      </li>
+    {% endif %}
   </ul>
 </nav>
+
+
+
+
+  <!-- Navigation Links -->
+  {% comment %} <ul class="flex space-x-6 mr-6 text-lg">
+    {% if user.is_authenticated %}
+      <li>
+        <a href="{% url 'manage_listings' %}" class="hover:text-laravel">
+          Manage Gigs
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'logout' %}" class="hover:text-laravel">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i> Logout
+        </a>
+      </li>
+    {% else %}
+      <li>
+        <a href="{% url 'register' %}" class="hover:text-laravel">
+          <i class="fa-solid fa-user-plus"></i> Register
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'login' %}" class="hover:text-laravel">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i> Login
+        </a>
+      </li>
+    {% endif %}
+  </ul>
+</nav> {% endcomment %}
