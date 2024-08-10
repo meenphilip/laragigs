@@ -23,7 +23,8 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-
+    <!-- Alpine JS -->
+    <script src="//unpkg.com/alpinejs" defer></script>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -39,6 +40,18 @@
     </script>
   </head>
   <body class="mb-48">
+    <!-- Message Block -->
+    {% if messages %} {% for message in messages %}
+    <div
+      x-data="{ show: true }"
+      x-init="setTimeout(() => show = false, 3000)"
+      x-show="show"
+      class="fixed top-0 left-1/2 transform -translate-x-1/2 bg-laravel bg-opacity-80 text-white px-48 py-3 mt-4"
+    >
+      <p>{{ message }}</p>
+    </div>
+    {% endfor %} {% endif %}
+
     <!-- Navbar -->
     {% include 'navbar.html' %}
 
@@ -48,6 +61,3 @@
     {% include 'footer.html' %}
   </body>
 </html>
-
-{% comment %} <link rel="stylesheet" href="{% static "css/style.css" %} ">
-{%endcomment %}
