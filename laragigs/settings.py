@@ -33,6 +33,11 @@ INTERNAL_IPS = [
     # ...
 ]
 
+# settings.py
+
+LOGIN_URL = "/users/login/"  # The URL to redirect non-authenticated users to
+LOGIN_REDIRECT_URL = "/listings/"  # The URL to redirect users to after logging in
+
 
 # Application definition
 
