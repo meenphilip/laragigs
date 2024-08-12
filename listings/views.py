@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from .utils import filter_and_search_listings, paginate_listings
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 from django.contrib import messages
-from .utils import filter_and_search_listings
 from .models import Listing
 from .forms import ListingForm
 
@@ -9,7 +10,13 @@ from .forms import ListingForm
 # Get all listings
 def listings(request, tag_slug=None):
     listings, query, tag = filter_and_search_listings(request, tag_slug)
-    context = {"listings": listings, "query": query, "tag": tag}
+    listings = paginate_listings(request, listings)
+    context = {
+        "listings": listings,
+        "query": query,
+        "tag": tag,
+        "search_url": reverse("search_listings"),  # Set the action URL for search
+    }
     return render(request, "listings/index.html", context)
 
 
@@ -69,9 +76,10 @@ def delete_listing(request, id):
     return render(request, "listings/delete.html", {"listing": listing})
 
 
-# search listings
+# Search in listings (for the index page)
 def search_listings(request):
     listings, query, tag = filter_and_search_listings(request)
+    listings = paginate_listings(request, listings)
     context = {"listings": listings, "query": query, "tag": tag}
     return render(request, "listings/index.html", context)
 
@@ -80,5 +88,23 @@ def search_listings(request):
 @login_required
 def manage_listings(request):
     listings = Listing.objects.filter(user=request.user)
-    context = {"listings": listings}
+    listings = paginate_listings(request, listings)
+    context = {
+        "listings": listings,
+        "search_url": reverse(
+            "search_manage_listings"
+        ),  # Set the action URL for manage search
+    }
+    return render(request, "listings/manage.html", context)
+
+
+# Search in manage listings (for the manage page)
+@login_required
+def search_manage_listings(request):
+    query = request.GET.get("q", "")
+    listings = Listing.objects.filter(
+        user=request.user, job_title__icontains=query
+    ) | Listing.objects.filter(user=request.user, company_name__icontains=query)
+    listings = paginate_listings(request, listings)
+    context = {"listings": listings, "query": query}
     return render(request, "listings/manage.html", context)
