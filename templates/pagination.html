@@ -1,0 +1,69 @@
+{% if listings.paginator.num_pages > 1 %}
+<!-- Pagination -->
+<nav aria-label="Page navigation">
+  <ul class="flex justify-end mt-5 space-x-1">
+    {% if listings.has_previous %}
+    <li>
+      <a
+        class="px-3 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100"
+        href="?{% if query %}q={{ query }}&{% endif %}page=1"
+        aria-label="First"
+      >
+        &laquo;&laquo;
+      </a>
+    </li>
+    <li>
+      <a
+        class="px-3 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100"
+        href="?{% if query %}q={{ query }}&{% endif %}page={{ listings.previous_page_number }}"
+        aria-label="Previous"
+      >
+        &laquo;
+      </a>
+    </li>
+    {% endif %}
+
+    {% for num in listings.paginator.page_range %}
+      {% if listings.number == num %}
+      <li>
+        <span
+          class="px-3 py-2 border border-gray-300 rounded-md bg-red-500 text-white"
+        >
+          {{ num }}
+        </span>
+      </li>
+      {% elif num > listings.number|add:'-3' and num < listings.number|add:'3' %}
+      <li>
+        <a
+          class="px-3 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100"
+          href="?{% if query %}q={{ query }}&{% endif %}page={{ num }}"
+        >
+          {{ num }}
+        </a>
+      </li>
+      {% endif %}
+    {% endfor %}
+
+    {% if listings.has_next %}
+    <li>
+      <a
+        class="px-3 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100"
+        href="?{% if query %}q={{ query }}&{% endif %}page={{ listings.next_page_number }}"
+        aria-label="Next"
+      >
+        &raquo;
+      </a>
+    </li>
+    <li>
+      <a
+        class="px-3 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100"
+        href="?{% if query %}q={{ query }}&{% endif %}page={{ listings.paginator.num_pages }}"
+        aria-label="Last"
+      >
+        &raquo;&raquo;
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+{% endif %}
