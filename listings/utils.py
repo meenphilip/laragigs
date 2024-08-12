@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
 from .models import Listing
 from taggit.models import Tag
@@ -25,3 +26,18 @@ def filter_and_search_listings(request, tag_slug=None):
     return listings, query, tag
 
 
+def paginate_listings(request, listings, results_per_page=4):
+    # Paginate by 2 per page
+    paginator = Paginator(listings, results_per_page)
+    # get current page number
+    page_number = request.GET.get("page")
+    try:
+        listings = paginator.page(page_number)
+    except PageNotAnInteger:
+        # If page_number is not an integer deliver the first page
+        listings = paginator.page(1)
+    except EmptyPage:
+        # If page_number is out of range deliver last page of results
+        listings = paginator.page(paginator.num_pages)
+
+    return listings
