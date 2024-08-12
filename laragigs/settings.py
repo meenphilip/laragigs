@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -34,10 +35,20 @@ INTERNAL_IPS = [
 ]
 
 # settings.py
-
 LOGIN_URL = "/users/login/"  # The URL to redirect non-authenticated users to
 LOGIN_REDIRECT_URL = "/listings/"  # The URL to redirect users to after logging in
 
+# Email configuration
+EMAIL_ADDRESS = os.environ.get("EMAIL_USER")
+EMAIL_PASSWORD = os.environ.get("EMAIL_PASS")
+
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = EMAIL_ADDRESS
+EMAIL_HOST_PASSWORD = EMAIL_PASSWORD
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # Application definition
 
@@ -88,6 +99,21 @@ WSGI_APPLICATION = "laragigs.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+
+# DB Configurations
+# MYSQL_USERNAME = os.environ.get("MYSQL_USER")
+# MYSQL_PASSWORD = os.environ.get("MYSQL_PASS")
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.mysql",
+#         "NAME": "laragigsDB",
+#         "USER": MYSQL_USERNAME,
+#         "PASSWORD": MYSQL_PASSWORD,
+#         "HOST": "127.0.0.1",
+#         "PORT": "3306",
+#     }
+# }
 
 DATABASES = {
     "default": {
