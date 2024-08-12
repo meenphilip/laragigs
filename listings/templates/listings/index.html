@@ -26,7 +26,7 @@
         {% endif %}
         <div>
           <h3 class="text-2xl">
-            <a href="show.html">{{ listing.job_title|capfirst }}</a>
+            <a href="{{listing.get_absolute_url}}">{{ listing.job_title|capfirst }}</a>
           </h3>
           <div class="text-xl font-bold mb-4">{{ listing.company_name|capfirst }}</div>
           <ul class="flex">
