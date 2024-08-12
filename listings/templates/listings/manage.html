@@ -2,9 +2,10 @@
 
 {% load static %} 
 
-{% block title %}Manage Gigs{% endblock %}
+{% block title %}Manage Gigs{% endblock %} 
 
 {% block content %} 
+
 {% include "search.html" %}
 
 <div class="mx-4">
@@ -12,23 +13,67 @@
     <header>
       <h1 class="text-3xl text-center font-bold my-6 uppercase">Manage Gigs</h1>
     </header>
-
     <table class="w-full table-auto rounded-sm">
+      <thead>
+        <tr class="border-gray-300">
+          <th
+            class="px-4 py-2 border-t border-b border-gray-300 text-left text-lg"
+          >
+            Job Title
+          </th>
+          <th
+            class="px-4 py-2 border-t border-b border-gray-300 text-left text-lg"
+          >
+            Company Name
+          </th>
+          <th
+            class="px-4 py-2 border-t border-b border-gray-300 text-center text-lg"
+          >
+            Edit
+          </th>
+          <th
+            class="px-4 py-2 border-t border-b border-gray-300 text-center text-lg"
+          >
+            Delete
+          </th>
+        </tr>
+      </thead>
       <tbody>
         {% for listing in listings %}
         <tr class="border-gray-300">
           <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">
-            <a href="{% url 'single-listing' listing.id %}">{{ listing.job_title }}</a>
+            <a href="{% url 'single-listing' listing.id %}"
+              >{{ listing.job_title }}</a
+            >
           </td>
           <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">
-            <a href="{% url 'update_listing' listing.id %}" class="text-blue-400 px-6 py-2 rounded-xl">
+            <a href="{% url 'single-listing' listing.id %}"
+              >{{ listing.company_name }}</a
+            >
+          </td>
+          <td
+            class="px-4 py-8 border-t border-b border-gray-300 text-lg text-center"
+          >
+            <a
+              href="{% url 'update_listing' listing.id %}"
+              class="text-blue-400 px-6 py-2 rounded-xl inline-flex items-center"
+            >
               <i class="fa-solid fa-pen-to-square"></i> Edit
             </a>
           </td>
-          <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">
-            <form action="{% url 'delete_listing' listing.id %}" method="POST">
+          <td
+            class="px-4 py-8 border-t border-b border-gray-300 text-lg text-center"
+          >
+            <form
+              action="{% url 'delete_listing' listing.id %}"
+              method="POST"
+              style="display: inline"
+            >
               {% csrf_token %}
-              <button type="submit" class="text-red-600">
+              <button
+                type="submit"
+                class="text-red-600 inline-flex items-center"
+              >
                 <i class="fa-solid fa-trash-can"></i> Delete
               </button>
             </form>
@@ -36,7 +81,10 @@
         </tr>
         {% empty %}
         <tr>
-          <td colspan="3" class="px-4 py-8 border-t border-b border-gray-300 text-lg text-center">
+          <td
+            colspan="4"
+            class="px-4 py-8 border-t border-b border-gray-300 text-lg text-center"
+          >
             <p class="font-bold">No listings found.</p>
           </td>
         </tr>
@@ -45,7 +93,4 @@
     </table>
   </div>
 </div>
-
-{% include "footer.html" %} 
-
-{% endblock %}
+{% include 'pagination.html' %} {% endblock %} {% include "footer.html" %}
