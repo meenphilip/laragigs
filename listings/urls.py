@@ -10,5 +10,5 @@ urlpatterns = [
     path("listings/<int:id>/delete/", views.delete_listing, name="delete_listing"),
     path("listings/manage/", views.manage_listings, name="manage_listings"),
     path("listings/search/", views.search_listings, name="search_listings"),
+    path("manage/search/", views.search_manage_listings, name="search_manage_listings"),
 ]
-
