@@ -30,6 +30,18 @@ class UserRegistrationForm(UserCreationForm):
         model = User
         fields = ["username", "email", "password1", "password2"]
 
+    def clean_password2(self):
+        cd = self.cleaned_data
+        if cd["password1"] != cd["password2"]:
+            raise forms.ValidationError("Passwords don't match.")
+        return cd["password2"]
+
+    def clean_email(self):
+        data = self.cleaned_data["email"]
+        if User.objects.filter(email=data).exists():
+            raise forms.ValidationError("Email already in use.")
+        return data
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["username"].widget.attrs.update(

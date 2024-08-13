@@ -76,6 +76,12 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+# Building a custom authentication backend
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "users.authentication.EmailAuthBackend",
+]
+
 ROOT_URLCONF = "laragigs.urls"
 
 TEMPLATES = [
