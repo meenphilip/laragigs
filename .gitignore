@@ -14,5 +14,4 @@ Pipfile.lock
 .vscode/
 
 # Ignore media files
-media/
 static/images/
