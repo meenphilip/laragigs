@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .utils import filter_and_search_listings, paginate_listings
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.urls import reverse
 from django.contrib import messages
 from .models import Listing
@@ -103,8 +104,9 @@ def manage_listings(request):
 def search_manage_listings(request):
     query = request.GET.get("q", "")
     listings = Listing.objects.filter(
-        user=request.user, job_title__icontains=query
-    ) | Listing.objects.filter(user=request.user, company_name__icontains=query)
+        Q(user=request.user)
+        & (Q(job_title__icontains=query) | Q(company_name__icontains=query))
+    )
     listings = paginate_listings(request, listings)
     context = {"listings": listings, "query": query}
     return render(request, "listings/manage.html", context)
