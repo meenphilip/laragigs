@@ -13,7 +13,9 @@ class Listing(models.Model):
     email = models.EmailField()
     website_url = models.URLField()
     tags = TaggableManager()  # Use TaggableManager for tags
-    logo = models.ImageField(upload_to="company-logos/", blank=True)
+    logo = models.ImageField(
+        upload_to="company-logos/", default="default-logo.png", blank=True
+    )
     description = models.TextField(blank=True)
     created = models.DateField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
