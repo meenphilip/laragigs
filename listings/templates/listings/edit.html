@@ -77,6 +77,20 @@
         {% endfor %}
       </div>
 
+    <!-- Website URL Field -->
+    <div class="mb-6">
+      <label
+        for="{{ form.website_url.id_for_label }}"
+        class="inline-block text-lg mb-2"
+      >
+        Website URL
+      </label>
+      {{ form.website_url }}
+      {% for error in form.website_url.errors %}
+      <p class="text-red-500 text-xs mt-1">{{ error }}</p>
+      {% endfor %}
+    </div>
+
       <!-- Company Logo Field -->
       <div class="mb-6">
         <label for="id_logo" class="inline-block text-lg mb-2"
@@ -92,7 +106,7 @@
         <div class="flex justify-center mt-4">
           <img
             src="{{ form.instance.logo.url }}"
-            class="w-32 h-32 object-cover"
+            class="w-32 h-32 object-fit"
             alt="Company Logo"
           />
         </div>
